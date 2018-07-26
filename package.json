@@ -1,0 +1,50 @@
+{
+    "name": "swaggerpreviewer",
+    "displayName": "SwaggerPreviewer",
+    "description": "Previewer of Swagger2.0 for docs.microsoft.com template",
+    "version": "0.0.1",
+    "publisher": "Personal",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.LocalBuild",
+        "onCommand:extension.Preview"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.LocalBuild",
+                "title": "RestPreviewer Splitter"
+            }, 
+            {
+                "command": "extension.Preview",
+                "title": "Preview API"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.43",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6"
+    },
+    "dependencies": {
+        "@types/fs-extra": "^5.0.4",
+        "child-process-promise": "^2.2.1",
+        "fs-extra": "^7.0.0",
+        "replace-in-file": "^3.4.0"
+    }
+}
