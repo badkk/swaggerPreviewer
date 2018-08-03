@@ -30,7 +30,6 @@ export function activate(context: vscode.ExtensionContext) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "swaggerpreviewer" is now active!');
 
-
     const editor = vscode.window.activeTextEditor;
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
@@ -39,8 +38,8 @@ export function activate(context: vscode.ExtensionContext) {
         try {
             if (editor) {
                 const swaggerFilePath = editor.document.fileName;
-                console.log(swaggerFilePath, swaggerFilePath.split('.').pop());
                 if(swaggerFilePath.split('.').pop() === 'json') {
+                    console.log("run json");
                     await preprocessing(swaggerFilePath);
                     await run(swaggerFilePath);
                 }
@@ -54,6 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (e.textEditor === vscode.window.activeTextEditor) {
             const generatedYamlPath = e.textEditor.document.fileName;
             if (generatedYamlPath.split('.').pop() === 'yml') {
+                console.log("select yml");
                 await preview(generatedYamlPath, e.textEditor.document);
             }
         }
@@ -89,7 +89,6 @@ async function run(swaggerFile: string) {
         out('Start running rest splitter...');
         await spawnProcess(splitterExecutor, [srcPath, newSamplePath + '/target', newSamplePath + '/mapping.json', newSamplePath + '/structured']);
         out('Successful split your swagger file');
-        await fs.copy(newSamplePath + '/structured', swaggerFolder);
         out('Running docfx...');
         await process.chdir(newSamplePath);
         if (!await fs.pathExists(localBuildPath)) {
@@ -97,6 +96,7 @@ async function run(swaggerFile: string) {
         } else {
             await spawnProcess('powershell.exe', [newSamplePath + '/.openpublishing.build.ps1', '-parameters "targets=localBuild"']);
         }
+        await fs.copy(newSamplePath + '/structured', swaggerFolder);
         out('Successful generate local preview files.');
     } catch (error) {
         console.log(error);
@@ -110,7 +110,6 @@ async function preview(generatedYamlPath: string, doc: vscode.TextDocument) {
 
     const htmlPath = path.join(generateHtmlPath, relativePath);
     const wrapperedPath = vscode.Uri.file(htmlPath);
-    console.log(`<head>\n<base href="${wrapperedPath.toString()}"/>`);
     await replaceFile(htmlPath, '<head>', `<head>\n<base href="${wrapperedPath.toString()}"/>`);
     await vscode.commands.executeCommand("vscode.previewHtml", wrapperedPath, vscode.ViewColumn.Two, 'Preview page');
     await vscode.window.showTextDocument(doc, vscode.ViewColumn.One);

@@ -5,22 +5,17 @@
     "version": "0.0.1",
     "publisher": "Personal",
     "engines": {
-        "vscode": "^1.25.0"
+        "vscode": "^1.25.1"
     },
     "categories": [
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.LocalBuild",
         "onCommand:extension.Preview"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
-            {
-                "command": "extension.LocalBuild",
-                "title": "RestPreviewer Splitter"
-            }, 
             {
                 "command": "extension.Preview",
                 "title": "Preview API"
@@ -39,7 +34,7 @@
         "@types/node": "^7.0.43",
         "tslint": "^5.8.0",
         "typescript": "^2.6.1",
-        "vscode": "^1.1.6"
+        "vscode": "^1.1.18"
     },
     "dependencies": {
         "@types/fs-extra": "^5.0.4",
