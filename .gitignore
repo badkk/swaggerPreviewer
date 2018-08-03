@@ -2,4 +2,7 @@ out
 node_modules
 .vscode-test/
 *.vsix
+<<<<<<< HEAD
 restSample/.git/*
+=======
+>>>>>>> c49712efd32a7e369a2dbc4c506956fca9b40dea
